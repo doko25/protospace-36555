@@ -1,0 +1,2 @@
+Can't initialize a new Rails application within the directory of another, please change to a non-Rails directory first.
+Type 'rails' for help.
