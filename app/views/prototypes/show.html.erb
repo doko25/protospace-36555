@@ -2,9 +2,9 @@
   <div class="inner">
     <div class="prototype__wrapper">
       <p class="prototype__hedding">
-        <%= "プロトタイプのタイトル"%>
+        <%= "#{@prototype.title}"%>
       </p>
-      <%= link_to "by プロトタイプの投稿者", root_path, class: :prototype__user %>
+      <%= link_to "by #{@prototype.user.name}",  user_path(@prototype.user.id), class: :prototype__user %>
       <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
         <div class="prototype__manage">
         <% if user_signed_in? && current_user.id == @prototype.user_id %>
@@ -20,19 +20,19 @@
         <div class="prototype__detail">
           <p class="detail__title">キャッチコピー</p>
           <p class="detail__message">
-            <%= "プロトタイプのキャッチコピー" %>
+            <%= "#{@prototype.catch_copy}" %>
           </p>
         </div>
         <div class="prototype__detail">
           <p class="detail__title">コンセプト</p>
           <p class="detail__message">
-            <%= "プロトタイプのコンセプト" %>
+            <%= "#{@prototype.concept}" %>
           </p>
         </div>
       </div>
       <div class="prototype__comments">
         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
-        <% if user_signed_in? && current_user.id == @prototype.user_id %>
+        <% if user_signed_in? %>
           <%= form_with(model: [@prototype, @comment], local: true) do |f|%>
             <div class="field">
               <%= f.label :text, "コメント" %><br />
