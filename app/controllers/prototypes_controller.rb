@@ -1,6 +1,6 @@
 class PrototypesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show,]
-  before_action :prototype_find, except: [:index, :new, :destroy]
+  before_action :prototype_find, except: [:index, :new, :destroy, :create]
   before_action :move_to_index, except: [:index, :show, :new, :create,:destroy, :update]
 
   def index
@@ -56,7 +56,7 @@ class PrototypesController < ApplicationController
   end
 
   def prototype_find
-    @prototype=Prototype.find(params[:id])
+    @prototypes=Prototype.find(params[:id])
   end
 
 
