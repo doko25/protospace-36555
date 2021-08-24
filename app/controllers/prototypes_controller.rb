@@ -1,6 +1,7 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :move_to_index, except: [:index, :show, :new, :create, :edit, :destroy, :update]
+  before_action :authenticate_user!, except: [:index, :show,]
+  before_action :prototype_find, except: [:index, :new, :destroy]
+  before_action :move_to_index, except: [:index, :show, :new, :create,:destroy, :update]
 
   def index
     @prototypes=Prototype.all
@@ -20,18 +21,15 @@ class PrototypesController < ApplicationController
   end
 
   def show
-    @prototype=Prototype.find(params[:id])
     @comment=Comment.new
     @comments = @prototype.comments.includes(:user)
     @commentss = @prototype.comments.includes(:user)
   end
 
   def edit
-    @prototype=Prototype.find(params[:id])
   end
 
   def update
-    @prototype=Prototype.find(params[:id])
     if @prototype.update(prototype_params)
       redirect_to prototype_path
     else
@@ -52,9 +50,14 @@ class PrototypesController < ApplicationController
   end
 
   def move_to_index
-    unless user_signed_in? == current_user.id
+    unless user_signed_in? && current_user.id == @prototype.user_id
       redirect_to action: :index
     end
   end
+
+  def prototype_find
+    @prototype=Prototype.find(params[:id])
+  end
+
 
 end
